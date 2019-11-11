@@ -28,7 +28,18 @@
     </inertial>
   </xacro:macro>
 
-  <link name="base_link">
+  <!-- had to rewrite base_footprint to base, otherwise everything blew up and errored-->
+  <link name="base_footprint">
+    <visual>
+      <geometry>
+        <cylinder radius="${width*2}" length="0.01"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+
+
+  <link name="body_yay">
     <visual>
       <geometry>
         <cylinder radius="${width}" length="${bodylen}"/>
@@ -42,6 +53,11 @@
     </collision>
     <xacro:default_inertial mass="10"/>
   </link>
+  <joint name="body_yay_to_base_footprint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="body_yay"/>
+    <origin xyz="0 0 ${bodylen/2+wheeldiam+(wheeldiam/2+.05)}" rpy="0 0 0"/>
+  </joint>
 
   <xacro:macro name="wheel" params="prefix suffix reflect">
 
@@ -76,20 +92,20 @@
         <geometry>
           <box size="${leglen} 0.1 0.2"/>
         </geometry>
-        <origin xyz="0 0 -${leglen/2}" rpy="0 ${pi/2} 0"/>
+        <origin xyz="0 0 ${leglen}" rpy="0 ${pi/2} 0"/>
         <material name="white"/>
       </visual>
       <collision>
         <geometry>
           <box size="${leglen} 0.1 0.2"/>
         </geometry>
-        <origin xyz="0 0 -${leglen/2}" rpy="0 ${pi/2} 0"/>
+        <origin xyz="0 0 0" rpy="0 ${pi/2} 0"/>
       </collision>
       <xacro:default_inertial mass="10"/>
     </link>
 
     <joint name="base_to_${prefix}_leg" type="fixed">
-      <parent link="base_link"/>
+      <parent link="base_footprint"/>
       <child link="${prefix}_leg"/>
       <origin xyz="0 ${reflect*(width+.02)} 0.25" />
     </joint>
@@ -112,7 +128,7 @@
     <joint name="${prefix}_base_joint" type="fixed">
       <parent link="${prefix}_leg"/>
       <child link="${prefix}_base"/>
-      <origin xyz="0 0 ${-leglen}" />
+      <origin xyz="0 0 0" />
     </joint>
     <xacro:wheel prefix="${prefix}" suffix="front" reflect="1"/>
     <xacro:wheel prefix="${prefix}" suffix="back" reflect="-1"/>
@@ -121,7 +137,7 @@
   <xacro:leg prefix="left" reflect="1" />
 
   <joint name="gripper_extension" type="prismatic">
-    <parent link="base_link"/>
+    <parent link="base_footprint"/>
     <child link="gripper_pole"/>
     <limit effort="1000.0" lower="-${width*2-.02}" upper="0" velocity="0.5"/>
     <origin rpy="0 0 0" xyz="${width-.01} 0 0.2"/>
@@ -207,10 +223,10 @@
   </link>
 
   <joint name="head_swivel" type="continuous">
-    <parent link="base_link"/>
+    <parent link="base_footprint"/>
     <child link="head"/>
     <axis xyz="0 0 1"/>
-    <origin xyz="0 0 ${bodylen/2}"/>
+    <origin xyz="0 0 ${bodylen+width}"/>
   </joint>
 
   <link name="box">
