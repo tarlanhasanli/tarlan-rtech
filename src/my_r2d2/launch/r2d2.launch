@@ -1,0 +1,20 @@
+<launch>
+
+  <arg name="model" default="$(find my_r2d2)/urdf/r2d2.urdf.xacro"/>
+  <arg name="gui" default="true" />
+  <arg name="rvizconfig" default="$(find my_r2d2)/config/r2d2.rviz" />
+
+  <!-- https://answers.ros.org/question/249766/no-transform-between-base_footprint-and-base_link/ -->
+  <arg name="use_tf_static" default="false"/> 
+
+
+  <param name="robot_description" command="$(find xacro)/scripts/xacro --inorder $(arg model)" />
+  <param name="use_gui" value="$(arg gui)"/>
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+    <param name="use_tf_static" value="false"/>
+  </node>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+
+</launch>
