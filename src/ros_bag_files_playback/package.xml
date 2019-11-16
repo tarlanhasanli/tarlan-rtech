@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>my_r2d2</name>
+  <version>0.0.0</version>
+  <description>The my_r2d2 package</description>
+
+  <maintainer email="dte@todo.todo">dte</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>joint_state_publisher</build_depend>
+  <build_export_depend>joint_state_publisher</build_export_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+
+</package>
