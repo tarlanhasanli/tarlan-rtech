@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>my_r2d2</name>
-  <version>0.0.0</version>
+  <version>0.0.1</version>
   <description>The my_r2d2 package</description>
 
-  <maintainer email="dte@todo.todo">dte</maintainer>
-  <license>TODO</license>
+  <maintainer email="tahasa@ttu.ee">Tarlan Hasanli</maintainer>
+  <license>MIT</license>
 
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>joint_state_publisher</build_depend>
