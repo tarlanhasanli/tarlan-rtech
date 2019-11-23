@@ -23,3 +23,6 @@
 	path = src/motoman
 	url = https://github.com/ros-industrial/motoman.git
 	branch = kinetic-devel
+[submodule "src/universal-robot"]
+	path = src/universal-robot
+	url = https://github.com/ros-industrial/universal_robot

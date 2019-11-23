@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>dual_manipulator_support</name>
+  <version>0.1.0</version>
+  <description>The dual_manipulator_support package</description>
+
+  <maintainer email="tahasa@ttu.ee">Tarlan Hasanli</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+</package>

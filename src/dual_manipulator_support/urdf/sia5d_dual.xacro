@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<robot name="sia5d_dual" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:property name="base_x" value="1.2" />
+  <xacro:property name="base_y" value="0.1" />
+  <xacro:property name="base_z" value="0.5" />
+  <xacro:property name="base_x_padding" value="0.1" />
+  <xacro:property name="sia5d_base_len" value="0.216" />
+  <xacro:property name="pi" value="3.1415" />
+
+  <material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+
+  <xacro:macro name="default_inertial" params="mass">
+    <inertial>
+      <mass value="${mass}" />
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+    </inertial>
+  </xacro:macro>
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${base_x} ${base_y} ${base_z}"/>
+      </geometry>
+      <origin rpy="${pi/2} 0 0" xyz="0 0 ${base_y/2}"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${base_x} ${base_y} ${base_z}"/>
+      </geometry>
+      <origin rpy="${pi/2} 0 0" xyz="0 0 ${base_y/2}"/>
+    </collision>
+    <xacro:default_inertial mass="10"/>
+  </link>
+
+  <xacro:include filename="$(find motoman_sia5d_support)/urdf/sia5d_macro.xacro"/>
+  <xacro:motoman_sia5d prefix="1_sia5d_"/>
+
+  <joint name="first" type="fixed">
+    <parent link="base_link"/>
+    <child link="1_sia5d_base_link"/>
+    <origin rpy="0 0 ${pi/2}" xyz="${base_x/2-sia5d_base_len/2-base_x_padding} 0 ${base_y}"/>
+  </joint>
+
+
+  <xacro:motoman_sia5d prefix="2_sia5d_"/>
+
+  <joint name="second" type="fixed">
+    <parent link="base_link"/>
+    <child link="2_sia5d_base_link"/>
+    <origin rpy="0 0 ${pi/2}" xyz="-${base_x/2-sia5d_base_len/2-base_x_padding} 0 ${base_y}"/>
+  </joint>
+</robot>

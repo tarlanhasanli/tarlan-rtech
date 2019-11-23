@@ -1,0 +1,32 @@
+# MoveIt-specific simulation settings
+moveit_sim_hw_interface:
+  joint_model_group: controllers_initial_group_
+  joint_model_group_pose: controllers_initial_pose_
+# Settings for ros_control control loop
+generic_hw_control_loop:
+  loop_hz: 300
+  cycle_time_error_threshold: 0.01
+# Settings for ros_control hardware interface
+hardware_interface:
+  joints:
+    - 1_ur5_shoulder_pan_joint
+    - 1_ur5_shoulder_lift_joint
+    - 1_ur5_elbow_joint
+    - 1_ur5_wrist_1_joint
+    - 1_ur5_wrist_2_joint
+    - 1_ur5_wrist_3_joint
+    - 2_sia5d_joint_s
+    - 2_sia5d_joint_l
+    - 2_sia5d_joint_e
+    - 2_sia5d_joint_u
+    - 2_sia5d_joint_r
+    - 2_sia5d_joint_b
+    - 2_sia5d_joint_t
+  sim_control_mode: 1  # 0: position, 1: velocity
+# Publish all joint states
+# Creates the /joint_states topic necessary in ROS
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+controller_list:
+  []
